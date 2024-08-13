@@ -1,0 +1,45 @@
+@import "../../responsive.scss";
+
+.listPage {
+  display: flex;
+  height: 100%;
+
+  .listContainer {
+    flex: 3;
+    height: 100%;
+
+    .wrapper{
+      height: 100%;
+      padding-right: 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+      overflow-y: scroll;
+      padding-bottom: 50px;
+    }
+/* Custom scrollbar styles for WebKit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+}
+
+
+
+::-webkit-scrollbar-thumb {
+  background: #a0a0a0; /* Medium gray color for the thumb */
+  border-radius: 10px; /* Rounded corners for the thumb */
+  border: 2px solid #f0f0f0; /* Adds space around the thumb */
+}
+
+
+
+  }
+  .mapContainer {
+    flex: 2;
+    height: 100%;
+    background-color: #fcf5f3;
+
+    @include md{
+      display: none;
+    }
+  }
+}
