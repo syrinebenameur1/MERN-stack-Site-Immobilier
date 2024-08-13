@@ -8,11 +8,14 @@ import testRoute from "./routes/test.route.js";
 import userRoute from "./routes/user.route.js";
 import chatRoute from "./routes/chat.route.js";
 import messageRoute from "./routes/message.route.js";
-import {verifyToken} from "./middleware/verifyToken.js";
+import { verifyToken } from "./middleware/verifyToken.js";
 
 dotenv.config();
 
 const app = express();
+
+// Set the port from the environment variable or default to 8800
+const PORT = process.env.PORT || 8800;
 
 app.use(cors({
   origin: 'http://localhost:5173', // Allow requests from this origin
@@ -32,6 +35,6 @@ app.get('/protected', verifyToken, (req, res) => {
   res.status(200).json({ message: 'This is a protected route', user: req.user });
 });
 
-app.listen(8800, () => {
-  console.log("Server is running!");
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
