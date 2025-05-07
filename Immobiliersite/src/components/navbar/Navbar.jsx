@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import "./navbar.scss";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import noAvatarImage from "./../../../public/noavatar.jpg"
 import { useNotificationStore } from "../../lib/notificationStore";
 
 
@@ -31,10 +30,11 @@ function Navbar() {
       <div className="right">
         {currentUser ? (
           <div className="user">
-            <img
-              src={currentUser ? currentUser.avatar : noAvatarImage}
-              alt=""
-            />
+             
+
+<img src={currentUser.avatar || "noavatar.jpg"} alt="" />
+
+
             <span>{currentUser.username}</span>
             <Link to="/profile" className="profile">
             {number > 0 && <div className="notification">{number}</div>}

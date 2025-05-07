@@ -1,13 +1,16 @@
-
 import "./listPage.scss";
 import Filter from "../../components/filter/Filter";
 import Card from "../../components/card/Card";
 import Map from "../../components/map/Map";
 import { Await, useLoaderData } from "react-router-dom";
 import { Suspense } from "react";
+//suspense permet d afficher des messages pendant que les données 
+//sont en attente
+
 
 function ListPage() {
   const data = useLoaderData();
+  //recuperation des données avant de les afficher
 
   return (
     <div className="listPage">

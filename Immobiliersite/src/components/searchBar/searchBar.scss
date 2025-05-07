@@ -1,4 +1,5 @@
-@import "../../responsive.scss";
+// After
+@use "../../responsive.scss" as *;
 
 .searchBar {
   .type {

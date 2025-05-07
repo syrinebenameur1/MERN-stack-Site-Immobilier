@@ -14,18 +14,3 @@ const axiosInstance = axios.create({
 export default axiosInstance;
 
 
-/**/
-
-
-
-
-/*        <UploadWidget
-          uwConfig={{
-            cloudName: "syrineuser",
-            uploadPreset: "immobilier",
-            multiple: false,
-            maxImageFileSize: 2000000,
-            folder: "avatars",
-          }}
-          setState={setAvatar}
-        />*/

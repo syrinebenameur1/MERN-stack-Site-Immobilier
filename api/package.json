@@ -22,6 +22,7 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "nodemon": "^3.1.4",
-    "prisma": "^5.11.0"
+    "prisma": "^5.11.0",
+    "stripe": "^17.6.0"
   }
 }

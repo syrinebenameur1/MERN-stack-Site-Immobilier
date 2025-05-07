@@ -13,6 +13,7 @@ const {updateUser} =useContext(AuthContext);
 
 
 const navigate=useNavigate();
+
   const handleSubmit = async (e) => {
     setisLoading(true);
     e.preventDefault();
@@ -45,7 +46,7 @@ try {
           <h1>Welcome back</h1>
           <input name="username" required type="text" placeholder="Username" />
           <input name="password" required type="password" placeholder="Password" />
-          <button disabled={isLoading} >Login</button>
+          <button  >Login</button>
           {error && <span>{error}</span>}
           <Link to="/register">{"Don't"} you have an account?</Link>
         </form >

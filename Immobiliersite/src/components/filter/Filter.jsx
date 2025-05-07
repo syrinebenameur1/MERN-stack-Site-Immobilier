@@ -4,6 +4,8 @@ import { useSearchParams } from "react-router-dom";
 
 function Filter() {
   const [searchParams, setSearchParams] = useSearchParams();
+  //recuperation des parametres de recherche actuels dans l'URL 
+
   const [query, setQuery] = useState({
     type: searchParams.get("type") || "",
     city: searchParams.get("city") || "",
@@ -12,6 +14,9 @@ function Filter() {
     maxPrice: searchParams.get("maxPrice") || "",
     bedroom: searchParams.get("bedroom") || "",
   });
+
+
+  //stockage des critéres de recherche avec searchParams.get()
 
   const handleChange = (e) => {
     setQuery({

@@ -9,10 +9,22 @@ import axiosInstance from "../../axiosInstance/axios";
 
 function SinglePage() {
   const post = useLoaderData();
-  console.log(post)
+  console.log(post);
   const [saved, setSaved] = useState(post.isSaved);
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const handleReserve = async () => {
+    if (!currentUser) {
+      navigate("/login");
+    }
+try {
+  navigate(`/reserve/${post.id}`);
+} catch(e) {
+  console.log(e);
+  
+}
+  }
 
   const handleSave = async () => {
     if (!currentUser) {
@@ -41,7 +53,7 @@ function SinglePage() {
                   <img src="/pin.png" alt="" />
                   <span>{post.address}</span>
                 </div>
-                <div className="price"> {post.price}  DT</div>
+                <div className="price"> {post.price} DT</div>
               </div>
               <div className="user">
                 <img src={post.user.avatar} alt="" />
@@ -140,10 +152,7 @@ function SinglePage() {
             <Map items={[post]} />
           </div>
           <div className="buttons">
-            <button>
-              <img src="/chat.png" alt="" />
-              Send a Message
-            </button>
+
             <button
               onClick={handleSave}
               style={{
@@ -153,6 +162,32 @@ function SinglePage() {
               <img src="/save.png" alt="" />
               {saved ? "Place Saved" : "Save the Place"}
             </button>
+
+            <div>
+              {post.type === "rent" ? (
+
+
+                <button
+                onClick={handleReserve}
+                >
+                <img src="https://static-00.iconduck.com/assets.00/calendar-small-icon-465x512-1wuvg4w9.png" alt=""
+                 />
+                Choose Reservation Date
+              </button>
+
+
+
+              ) : (
+                <>
+                <h2> u are choosing buy </h2>
+
+                <button>
+                <img src="/chat.png" alt="" />
+                Send a Message
+              </button>
+              </>
+              )}
+            </div>
           </div>
         </div>
       </div>

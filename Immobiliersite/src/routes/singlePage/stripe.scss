@@ -1,0 +1,86 @@
+.singlePage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: #f7f7f7;
+    min-height: 100vh;
+  
+    .details {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 2rem;
+      width: 90%;
+      max-width: 600px;
+  
+      .wrapper {
+        .info {
+          .top {
+            text-align: center;
+            h1 {
+              margin-bottom: 1.5rem;
+              color: #333;
+            }
+            .payment-details {
+              display: flex;
+              flex-direction: column;
+              gap: 1rem;
+              margin-bottom: 1.5rem;
+  
+              .feature {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                background-color: #f2f2f2;
+                padding: 1rem;
+                border-radius: 6px;
+  
+                img {
+                  width: 40px;
+                  height: 40px;
+                }
+  
+                .featureText {
+                  text-align: left;
+                  span {
+                    font-weight: bold;
+                    display: block;
+                    margin-bottom: 0.5rem;
+                  }
+                  p {
+                    margin: 0;
+                  }
+                }
+              }
+            }
+            .back-home {
+              display: inline-block;
+              margin-top: 1.5rem;
+              padding: 0.75rem 2rem;     // more horizontal breathing room
+              background-color: #fece51; // warm yellow to match your theme
+              color: #333;
+              font-weight: 600;
+              font-size: 1rem;
+              text-decoration: none;
+              border-radius: 0.5rem;     // 8px rounded corners
+              box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+              transition: background-color 0.2s ease, transform 0.1s ease;
+              
+              &:hover {
+                background-color: #e0b42e;
+                transform: translateY(-1px);
+              }
+              
+              &:active {
+                transform: translateY(0);
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+              }
+            }
+            
+          }
+        }
+      }
+    }
+  }
+  

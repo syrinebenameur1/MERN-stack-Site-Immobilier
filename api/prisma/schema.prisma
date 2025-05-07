@@ -31,7 +31,13 @@ model Post {
   userId     String      @db.ObjectId
   postDetail PostDetail?
   savedPosts SavedPost[]
+    reservations Reservation[]
+
 }
+
+
+
+
 
 enum Type {
   buy
@@ -83,6 +89,8 @@ model User {
   savedPosts SavedPost[]
   chats      Chat[]      @relation(fields: [chatIDs], references: [id])
   chatIDs    String[]    @db.ObjectId
+    reservations Reservation[]
+
 }
 
 
@@ -104,3 +112,19 @@ model Message {
   chatId    String   @db.ObjectId
   createdAt DateTime @default(now())
 }
+
+model Reservation {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  reservedDate DateTime
+  createdAt    DateTime @default(now())
+
+ user      User     @relation(fields: [userId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id])
+  userId    String   @db.ObjectId
+  postId    String   @db.ObjectId
+  paid         Boolean  @default(false) // Ce champ permet de savoir si la réservation est payée
+
+}
+
+
+//each relations have to be two sided !! 

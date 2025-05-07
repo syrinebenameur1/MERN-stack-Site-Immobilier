@@ -1,0 +1,98 @@
+@use "../../responsive.scss" as *; // bring in your breakpoints/mixins
+
+.reservation-page {
+  background: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+
+  .reservation-wrapper {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    overflow-y: auto;
+
+
+    /* make this scrollable */
+    max-height: 90vh;
+    overflow-y: auto;
+    text-align: center;
+
+    /* at smaller breakpoints, allow full scrolling */
+    @include md {
+      max-height: none;
+      height: 100%;
+      overflow: scroll;
+    }
+
+    @media (max-width: 480px) {
+      .reservation-wrapper {
+        max-height: 80vh;
+      }
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 1.5rem;
+    }
+
+    .custom-calendar {
+      margin: 0 auto 2rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      font-family: inherit;
+
+      .reserved {
+        background-color: red !important;
+        color: white;
+      }
+    }
+
+    button {
+      background-color: #fece51;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      color: #333;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #e0b42e;
+      }
+
+      &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+    }
+  }
+}
+
+/* Custom scrollbar styles for WebKit browsers */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a0a0a0; /* Medium gray thumb */
+  border-radius: 10px; /* Rounded corners */
+  border: 2px solid #f9f9f9; /* Light border for padding effect */
+}

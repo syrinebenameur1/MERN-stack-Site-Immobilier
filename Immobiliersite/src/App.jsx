@@ -11,6 +11,8 @@ import ProfileUpdatePage from './routes/profileUpdatePage/profileUpdatePage';
 import NewPostPage from './routes/newPostPage/newPostPage';
 import DashboardPage from './Dashboard/Dashboard' // Import the new component
 import { listPageLoader, profilePageLoader, singlePageLoader } from './lib/loaders';
+import ReservationPage from './routes/singlePage/ReservationPage';
+import PaymentSuccess from './routes/singlePage/PaymentSuccess';
 
 function App() {
   const router = createBrowserRouter([
@@ -26,6 +28,9 @@ function App() {
           path: "/list",
           element: <ListPage />,
           loader: listPageLoader,
+          children: [
+            
+          ]
         },
         {
           path: "/:id",
@@ -62,7 +67,17 @@ function App() {
         {
           path: "/add",
           element: <NewPostPage />,
+        },
+        {
+          path: "/reserve/:postId",
+          element: <ReservationPage />
+        },
+        {
+          path: "/checkout",
+          element: <PaymentSuccess />
         }
+        
+        
       ]
     }
   ]);
