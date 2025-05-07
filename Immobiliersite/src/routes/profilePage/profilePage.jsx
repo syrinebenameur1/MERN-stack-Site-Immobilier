@@ -16,7 +16,7 @@ const {updateUser, currentUser} = useContext(AuthContext);
   const handleLogout = async() => {
 
     try {
- await axios.post("http://localhost:8800/api/auth/logout");
+ await axios.post("https://immobilier-api.onrender.com/api/auth/logout");
 updateUser(null);
 navigate("/");
 
