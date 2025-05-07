@@ -20,7 +20,7 @@ const app = express();
 const PORT = process.env.PORT || 8800;
 
 app.use(cors({
-  origin: 'http://localhost:5173', // Allow requests from this origin
+  origin: 'https://immobilier-api.onrender.com', // Allow requests from this origin
   credentials: true, // Allow cookies and other credentials
 }));
 
