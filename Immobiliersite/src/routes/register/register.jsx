@@ -16,7 +16,7 @@ const navigate= useNavigate();
     const password= formData.get("password");
 
 try {
-  const result = await axios.post ("http://localhost:8800/api/auth/register",{
+  const result = await axios.post ("https://immobilier-api.onrender.com/api/auth/register",{
     username,email,password
   })
 
