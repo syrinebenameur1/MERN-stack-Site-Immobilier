@@ -22,10 +22,14 @@ export const listPageLoader = async ({ request, params }) => {
 //  });
 //};
 
-export const profilePageLoader = () => {
+export async function profileLoader() {
+  const userPostsPromise  = axios.get("https://immobilier-api.onrender.com/api/posts/user");
+  const savedPostsPromise = axios.get("https://immobilier-api.onrender.com/api/posts/saved");
+  const chatPromise       = axios.get("https://immobilier-api.onrender.com/api/chats");
+
   return defer({
-    myPosts:   axiosInstance("/users/myPosts"),
-    saved:     axiosInstance("/users/savedPosts"),
-    chatData:  axiosInstance("/chats"),
+    userPosts:  userPostsPromise,
+    savedPosts: savedPostsPromise,
+    chatPosts:  chatPromise,
   });
-};
+}
