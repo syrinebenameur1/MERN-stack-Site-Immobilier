@@ -7,6 +7,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
+     "build": "npm install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -26,5 +27,8 @@
     "nodemon": "^3.1.4",
     "prisma": "^5.11.0",
     "stripe": "^17.6.0"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
