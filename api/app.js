@@ -21,7 +21,10 @@ const PORT = process.env.PORT || 8800;
 
 app.use(cors({
   origin: 'https://immobilier-api.onrender.com', // Allow requests from this origin
-  credentials: true, // Allow cookies and other credentials
+    origin: true, // Allow all origins in development
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
 }));
 
 app.use(express.json());
