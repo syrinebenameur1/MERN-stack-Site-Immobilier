@@ -34,7 +34,7 @@ export const createCheckoutSession = async (req, res) => {
       metadata: {
         reservationId: reservationId
       },
-      success_url: `${process.env.CLIENT_URL}/checkout?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${process.env.CLIENT_URL}checkout?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.CLIENT_URL}/reserve/${reservation.post.id}`,
     });
 
