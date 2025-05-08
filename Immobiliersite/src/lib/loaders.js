@@ -13,12 +13,16 @@ export const listPageLoader = async ({ request, params }) => {
   });
 };
 
-export const profilePageLoader = async () => {
-  const postPromise = axiosInstance("/users/profilePosts");
-  const chatPromise = axiosInstance("/chats");
+
+export const profilePageLoader = () => {
+  const userPostsPromise  = axiosInstance("/users/profilePosts");
+  const savedPostsPromise = axiosInstance("/users/savedPosts");
+  const chatPromise       = axiosInstance("/chats");
+
   return defer({
-    postResponse: postPromise,
-    chatResponse: chatPromise,
+    userPostsResponse:  userPostsPromise,
+    savedPostsResponse: savedPostsPromise,
+    chatResponse:       chatPromise,
   });
 };
 
