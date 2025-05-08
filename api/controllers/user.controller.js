@@ -132,6 +132,49 @@ export const profilePosts = async (req, res) => {
     res.status(500).json({ message: "Failed to get profile posts!" });
   }
 };
+// GET /api/users/profilePosts
+export const getProfilePosts = async (req, res) => {
+  const userId = req.userId;       // set by your verifyToken middleware
+  try {
+    const userPosts = await prisma.post.findMany({
+      where: { userId },
+      include: { postDetail: true },
+      orderBy: { createdAt: "desc" },
+    });
+    return res.status(200).json({ userPosts });
+  } catch (err) {
+    console.error("getProfilePosts:", err);
+    return res.status(500).json({ message: "Failed to fetch your posts." });
+  }
+};
+
+// GET /api/users/savedPosts
+export const getSavedPosts = async (req, res) => {
+  const userId = req.userId;
+  try {
+    // First, find all savedPost entries for this user
+    const savedEntries = await prisma.savedPost.findMany({
+      where: { userId },
+      select: { postId: true },
+    });
+    const postIds = savedEntries.map(e => e.postId);
+
+    // Then load those posts (and include details/user if you like)
+    const savedPosts = await prisma.post.findMany({
+      where: { id: { in: postIds } },
+      include: {
+        postDetail: true,
+        user: { select: { username: true, avatar: true } },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return res.status(200).json({ savedPosts });
+  } catch (err) {
+    console.error("getSavedPosts:", err);
+    return res.status(500).json({ message: "Failed to fetch saved posts." });
+  }
+};
 
 export const getNotificationNumber = async (req, res) => {
   const tokenUserId = req.userId;
