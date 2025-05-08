@@ -52,7 +52,7 @@ console.log(err)
           </div>
           <div className="title">
             <h1>My List</h1>
-            <Link to="https://immobilier-api.onrender.com/api/add">
+            <Link to="/add">
               <button>Create New Post</button>
             </Link>
           </div>
