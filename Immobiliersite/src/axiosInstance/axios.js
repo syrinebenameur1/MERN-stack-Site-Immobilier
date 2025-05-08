@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://immobilier-api.onrender.com/api',
+  baseURL: 'https://immobilier-api.onrender.com',
   withCredentials: true, // Ensures cookies are sent in requests
   headers: {
     'Content-Type': 'application/json',
