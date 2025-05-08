@@ -58,7 +58,10 @@ console.log(err)
           </div>
 <Suspense fallback={<p>Loading...</p>}>
   <Await resolve={data.userPostsResponse}>
-    {res => <List posts={res.data.userPosts} />}
+    {res => <List posts={res.data.userPosts} />
+                  errorElement={<p>Error loading chats!</p>}
+
+    }
   </Await>
 </Suspense>
           <div className="title">
@@ -66,7 +69,10 @@ console.log(err)
           </div>
 <Suspense fallback={<p>Loading...</p>}>
   <Await resolve={data.savedPostsResponse}>
-    {res => <List posts={res.data.savedPosts} />}
+    {res => <List posts={res.data.savedPosts} />
+                  errorElement={<p>Error loading chats!</p>}
+
+    }
   </Await>
 </Suspense>
         </div>
