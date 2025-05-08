@@ -1,39 +1,35 @@
+// chats.controller.js
 import prisma from "../lib/prisma.js";
 
+// GET /api/chats
 export const getChats = async (req, res) => {
-  const tokenUserId = req.userId;
-
+  const userId = req.userId;
   try {
+    // Find all chats where this user is a participant
     const chats = await prisma.chat.findMany({
       where: {
-        userIDs: {
-          hasSome: [tokenUserId],
-        },
+        participants: { some: { userId } }
       },
+      include: {
+        participants: {
+          select: {
+            user: { select: { id: true, username: true, avatar: true } }
+          }
+        },
+        messages: {
+          orderBy: { createdAt: 'asc' },
+          include: { from: { select: { id: true, username: true } } }
+        }
+      },
+      orderBy: { updatedAt: 'desc' }
     });
-
-    for (const chat of chats) {
-      const receiverId = chat.userIDs.find((id) => id !== tokenUserId);
-
-      const receiver = await prisma.user.findUnique({
-        where: {
-          id: receiverId,
-        },
-        select: {
-          id: true,
-          username: true,
-          avatar: true,
-        },
-      });
-      chat.receiver = receiver;
-    }
-
-    res.status(200).json(chats);
+    return res.status(200).json(chats);
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Failed to get chats!" });
+    console.error("getChats:", err);
+    return res.status(500).json({ message: "Failed to fetch chats." });
   }
 };
+
 
 export const getChat = async (req, res) => {
   const tokenUserId = req.userId;
