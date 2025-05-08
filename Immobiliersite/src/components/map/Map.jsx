@@ -1,7 +1,19 @@
 import { MapContainer, TileLayer } from 'react-leaflet'
+import L from "leaflet";
+import iconRetinaUrl  from 'leaflet/dist/images/marker-icon-2x.png';
+import iconUrl        from 'leaflet/dist/images/marker-icon.png';
+import shadowUrl      from 'leaflet/dist/images/marker-shadow.png';
 import './map.scss'
 import "leaflet/dist/leaflet.css";
 import Pin from '../pin/Pin';
+
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl,
+  iconUrl,
+  shadowUrl,
+});
 
 function Map({items}){
   return (
