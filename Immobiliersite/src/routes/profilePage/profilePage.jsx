@@ -1,30 +1,38 @@
 import axios from "axios";
-import Chat from "../../components/chat/Chat";
-import List from "../../components/list/List";
-import "./profilePage.scss";
 import { useNavigate, Link, useLoaderData, Await } from "react-router-dom";
 import { Suspense, useContext } from "react";
+
 import { AuthContext } from "../../context/AuthContext";
+import List from "../../components/list/List";
+import Chat from "../../components/chat/Chat";
+
+import "./profilePage.scss";
 
 function ProfilePage() {
-  const data = useLoaderData();
+  const data = useLoaderData(); // { userPostsResponse, savedPostsResponse, chatResponse }
   const { updateUser, currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      await axios.post("https://immobilier-api.onrender.com/api/auth/logout");
+      await axios.post(
+        "https://immobilier-api.onrender.com/api/auth/logout",
+        {},
+        { withCredentials: true }
+      );
       updateUser(null);
       navigate("/");
     } catch (err) {
-      console.log(err);
+      console.error("Logout failed:", err);
     }
   };
 
   return (
     <div className="profilePage">
+      {/* — User Details & Lists — */}
       <div className="details">
         <div className="wrapper">
+          {/* User Information */}
           <div className="title">
             <h1>User Information</h1>
             <Link to="/profile/update">
@@ -34,7 +42,10 @@ function ProfilePage() {
           <div className="info">
             <span>
               Avatar:
-              <img src={currentUser.avatar || "noavatar.jpg"} alt="" />
+              <img
+                src={currentUser.avatar || "/noavatar.jpg"}
+                alt="user avatar"
+              />
             </span>
             <span>
               Username: <b>{currentUser.username}</b>
@@ -45,30 +56,30 @@ function ProfilePage() {
             <button onClick={handleLogout}>Logout</button>
           </div>
 
+          {/* My List */}
           <div className="title">
             <h1>My List</h1>
             <Link to="/add">
               <button>Create New Post</button>
             </Link>
           </div>
-
-          <Suspense fallback={<p>Loading your posts...</p>}>
+          <Suspense fallback={<p>Loading your posts…</p>}>
             <Await
-              resolve={data.postResponse}
-              errorElement={<p>Error loading posts!</p>}
+              resolve={data.userPostsResponse}
+              errorElement={<p>Error loading your posts.</p>}
             >
               {(res) => <List posts={res.data.userPosts} />}
             </Await>
           </Suspense>
 
+          {/* Saved List */}
           <div className="title">
             <h1>Saved List</h1>
           </div>
-
-          <Suspense fallback={<p>Loading saved posts...</p>}>
+          <Suspense fallback={<p>Loading saved posts…</p>}>
             <Await
-              resolve={data.postResponse}
-              errorElement={<p>Error loading saved posts!</p>}
+              resolve={data.savedPostsResponse}
+              errorElement={<p>Error loading saved posts.</p>}
             >
               {(res) => <List posts={res.data.savedPosts} />}
             </Await>
@@ -76,14 +87,18 @@ function ProfilePage() {
         </div>
       </div>
 
+      {/* — Chat Section — */}
       <div className="chatContainer">
         <div className="wrapper">
-          <Suspense fallback={<p>Loading chats...</p>}>
+          <div className="title">
+            <h1>Your Chats</h1>
+          </div>
+          <Suspense fallback={<p>Loading chats…</p>}>
             <Await
               resolve={data.chatResponse}
-              errorElement={<p>Error loading chats!</p>}
+              errorElement={<p>Error loading chats.</p>}
             >
-              {(chatResponse) => <Chat chats={chatResponse.data} />}
+              {(chatRes) => <Chat chats={chatRes.data} />}
             </Await>
           </Suspense>
         </div>
