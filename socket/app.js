@@ -2,7 +2,9 @@ import { Server } from "socket.io";
 
 const io = new Server({
   cors: {
-    origin: "https://immobilier-frontend.onrender.com",
+    origin: ["https://immobilier-frontend.onrender.com"],
+    credentials: true,
+    methods: ["GET", "POST"]
   },
 });
 
