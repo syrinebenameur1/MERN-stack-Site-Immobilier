@@ -8,24 +8,18 @@ import { AuthContext } from "../../context/AuthContext";
 
 function ProfilePage() {
   const data = useLoaderData();
-const {updateUser, currentUser} = useContext(AuthContext);
+  const { updateUser, currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const navigate =useNavigate();
-
-  
-  const handleLogout = async() => {
-
+  const handleLogout = async () => {
     try {
- await axios.post("https://immobilier-api.onrender.com/api/auth/logout");
-updateUser(null);
-navigate("/");
-
-    } catch (err){
-console.log(err)
+      await axios.post("https://immobilier-api.onrender.com/api/auth/logout");
+      updateUser(null);
+      navigate("/");
+    } catch (err) {
+      console.log(err);
     }
-
-    
-  }
+  };
 
   return (
     <div className="profilePage">
@@ -50,41 +44,46 @@ console.log(err)
             </span>
             <button onClick={handleLogout}>Logout</button>
           </div>
+
           <div className="title">
             <h1>My List</h1>
             <Link to="/add">
               <button>Create New Post</button>
             </Link>
           </div>
-<Suspense fallback={<p>Loading...</p>}>
-  <Await resolve={data.userPostsResponse}>
-    {res => <List posts={res.data.userPosts} />
-                  errorElement={<p>Error loading chats!</p>}
 
-    }
-  </Await>
-</Suspense>
+          <Suspense fallback={<p>Loading your posts...</p>}>
+            <Await
+              resolve={data.postResponse}
+              errorElement={<p>Error loading posts!</p>}
+            >
+              {(res) => <List posts={res.data.userPosts} />}
+            </Await>
+          </Suspense>
+
           <div className="title">
             <h1>Saved List</h1>
           </div>
-<Suspense fallback={<p>Loading...</p>}>
-  <Await resolve={data.savedPostsResponse}>
-    {res => <List posts={res.data.savedPosts} />
-                  errorElement={<p>Error loading chats!</p>}
 
-    }
-  </Await>
-</Suspense>
+          <Suspense fallback={<p>Loading saved posts...</p>}>
+            <Await
+              resolve={data.postResponse}
+              errorElement={<p>Error loading saved posts!</p>}
+            >
+              {(res) => <List posts={res.data.savedPosts} />}
+            </Await>
+          </Suspense>
         </div>
       </div>
+
       <div className="chatContainer">
         <div className="wrapper">
-          <Suspense fallback={<p>Loading...</p>}>
+          <Suspense fallback={<p>Loading chats...</p>}>
             <Await
               resolve={data.chatResponse}
               errorElement={<p>Error loading chats!</p>}
             >
-              {(chatResponse) => <Chat chats={chatResponse.data}/>}
+              {(chatResponse) => <Chat chats={chatResponse.data} />}
             </Await>
           </Suspense>
         </div>
