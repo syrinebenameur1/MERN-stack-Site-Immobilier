@@ -1,75 +1,36 @@
 import axios from "axios";
-import { useEffect, useState, useContext } from "react";
-import { useNavigate, Link } from "react-router-dom";
-
-import { AuthContext } from "../../context/AuthContext";
-import List from "../../components/list/List";
 import Chat from "../../components/chat/Chat";
-
+import List from "../../components/list/List";
 import "./profilePage.scss";
-
-const API = axios.create({
-  baseURL: "https://immobilier-api.onrender.com/api",
-  withCredentials: true,
-});
+import { useNavigate, Link, useLoaderData, Await } from "react-router-dom";
+import { Suspense, useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 function ProfilePage() {
-  const { currentUser, updateUser } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const data = useLoaderData();
+const {updateUser, currentUser} = useContext(AuthContext);
 
-  // Local state for posts, savedPosts, chats
-  const [userPosts, setUserPosts]       = useState([]);
-  const [savedPosts, setSavedPosts]     = useState([]);
-  const [chats, setChats]               = useState([]);
+  const navigate =useNavigate();
 
-  // Loading / error flags
-  const [loadingPosts,   setLoadingPosts]   = useState(true);
-  const [loadingSaved,   setLoadingSaved]   = useState(true);
-  const [loadingChats,   setLoadingChats]   = useState(true);
-  const [errorPosts,     setErrorPosts]     = useState(null);
-  const [errorSaved,     setErrorSaved]     = useState(null);
-  const [errorChats,     setErrorChats]     = useState(null);
+  
+  const handleLogout = async() => {
 
-  // Logout handler (unchanged)
-  const handleLogout = async () => {
     try {
-      await API.post("/auth/logout");
-      updateUser(null);
-      navigate("/");
-    } catch (err) {
-      console.error("Logout failed:", err);
+ await axios.post("https://immobilier-api.onrender.com/api/auth/logout");
+updateUser(null);
+navigate("/");
+
+    } catch (err){
+console.log(err)
     }
-  };
 
-  // Fetch user posts
-  useEffect(() => {
-    API.get("/users/profilePosts")
-      .then(res => setUserPosts(res.data.userPosts))
-      .catch(err => setErrorPosts(err))
-      .finally(() => setLoadingPosts(false));
-  }, []);
-
-  // Fetch saved posts
-  useEffect(() => {
-    API.get("/users/savedPosts")
-      .then(res => setSavedPosts(res.data.savedPosts))
-      .catch(err => setErrorSaved(err))
-      .finally(() => setLoadingSaved(false));
-  }, []);
-
-  // Fetch chats
-  useEffect(() => {
-    API.get("/chats")
-      .then(res => setChats(res.data))
-      .catch(err => setErrorChats(err))
-      .finally(() => setLoadingChats(false));
-  }, []);
+    
+  }
 
   return (
     <div className="profilePage">
       <div className="details">
         <div className="wrapper">
-          {/* User Info */}
           <div className="title">
             <h1>User Information</h1>
             <Link to="/profile/update">
@@ -79,55 +40,57 @@ function ProfilePage() {
           <div className="info">
             <span>
               Avatar:
-              <img src={currentUser.avatar || "/noavatar.jpg"} alt="avatar" />
+              <img src={currentUser.avatar || "noavatar.jpg"} alt="" />
             </span>
-            <span>Username: <b>{currentUser.username}</b></span>
-            <span>E-mail: <b>{currentUser.email}</b></span>
+            <span>
+              Username: <b>{currentUser.username}</b>
+            </span>
+            <span>
+              E-mail: <b>{currentUser.email}</b>
+            </span>
             <button onClick={handleLogout}>Logout</button>
           </div>
-
-          {/* My List */}
           <div className="title">
             <h1>My List</h1>
-            <Link to="/add"><button>Create New Post</button></Link>
+            <Link to="/add">
+              <button>Create New Post</button>
+            </Link>
           </div>
-          {loadingPosts ? (
-            <p>Loading your posts…</p>
-          ) : errorPosts ? (
-            <p className="error">Error loading posts.</p>
-          ) : (
-            <List posts={userPosts} />
-          )}
-
-          {/* Saved List */}
+          <Suspense fallback={<p>Loading...</p>}>
+            <Await
+              resolve={data.postResponse}
+              errorElement={<p>Error loading posts!</p>}
+            >
+              {(postResponse) => <List posts={postResponse.data.userPosts} />}
+            </Await>
+          </Suspense>
           <div className="title">
             <h1>Saved List</h1>
           </div>
-          {loadingSaved ? (
-            <p>Loading saved posts…</p>
-          ) : errorSaved ? (
-            <p className="error">Error loading saved posts.</p>
-          ) : (
-            <List posts={savedPosts} />
-          )}
+          <Suspense fallback={<p>Loading...</p>}>
+            <Await
+              resolve={data.postResponse}
+              errorElement={<p>Error loading posts!</p>}
+            >
+              {(postResponse) => <List posts={postResponse.data.savedPosts} />}
+            </Await>
+          </Suspense>
         </div>
       </div>
-
-      {/* Chats */}
       <div className="chatContainer">
         <div className="wrapper">
-          <h2>Your Chats</h2>
-          {loadingChats ? (
-            <p>Loading chats…</p>
-          ) : errorChats ? (
-            <p className="error">Error loading chats.</p>
-          ) : (
-            <Chat chats={chats} />
-          )}
+          <Suspense fallback={<p>Loading...</p>}>
+            <Await
+              resolve={data.chatResponse}
+              errorElement={<p>Error loading chats!</p>}
+            >
+              {(chatResponse) => <Chat chats={chatResponse.data}/>}
+            </Await>
+          </Suspense>
         </div>
       </div>
     </div>
   );
 }
 
-export default ProfilePage;
+export default ProfilePage; 
