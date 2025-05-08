@@ -17,7 +17,9 @@ router.get("/", getUsers);
 router.put('/:id', verifyToken, updateUser);
 router.delete("/:id", verifyToken, deleteUser);
 router.post("/save", verifyToken, savePost);
-router.get("/profilePosts", verifyToken, profilePosts);
+router.get("/profilePosts", getProfilePosts);
 router.get("/notification", verifyToken, getNotificationNumber);
+router.get("/savedPosts",verifyToken,   getSavedPosts);
+
 
 export default router;
