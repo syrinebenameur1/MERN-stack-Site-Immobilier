@@ -56,38 +56,37 @@ console.log(err)
               <button>Create New Post</button>
             </Link>
           </div>
-
-          
           <Suspense fallback={<p>Loading...</p>}>
-    <Await resolve={data.userPosts}>
-     {res => <List posts={res.data.userPosts} />}
-   </Await>
+            <Await
+              resolve={data.postResponse}
+              errorElement={<p>Error loading posts!</p>}
+            >
+              {(postResponse) => <List posts={postResponse.data.userPosts} />}
+            </Await>
           </Suspense>
           <div className="title">
             <h1>Saved List</h1>
           </div>
           <Suspense fallback={<p>Loading...</p>}>
-    <Await resolve={data.savedPosts}>
-      {res => <List posts={res.data.savedPosts} />}
-   </Await>
+            <Await
+              resolve={data.postResponse}
+              errorElement={<p>Error loading posts!</p>}
+            >
+              {(postResponse) => <List posts={postResponse.data.savedPosts} />}
+            </Await>
           </Suspense>
-
-          
         </div>
       </div>
       <div className="chatContainer">
         <div className="wrapper">
           <Suspense fallback={<p>Loading...</p>}>
             <Await
-              resolve={data.chatPosts}
+              resolve={data.chatResponse}
               errorElement={<p>Error loading chats!</p>}
             >
               {(chatResponse) => <Chat chats={chatResponse.data}/>}
             </Await>
           </Suspense>
-
-
-          
         </div>
       </div>
     </div>
