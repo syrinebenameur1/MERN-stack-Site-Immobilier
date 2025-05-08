@@ -10,7 +10,7 @@ import Register from './routes/register/register';
 import ProfileUpdatePage from './routes/profileUpdatePage/profileUpdatePage';
 import NewPostPage from './routes/newPostPage/newPostPage';
 import DashboardPage from './Dashboard/Dashboard' // Import the new component
-import { listPageLoader, profilePageLoader, singlePageLoader } from './lib/loaders';
+import { listPageLoader, profileLoader, singlePageLoader } from './lib/loaders';
 import ReservationPage from './routes/singlePage/ReservationPage';
 import PaymentSuccess from './routes/singlePage/PaymentSuccess';
 
