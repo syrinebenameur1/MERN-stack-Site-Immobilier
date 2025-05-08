@@ -14,12 +14,10 @@ export const listPageLoader = async ({ request, params }) => {
 };
 
 export const profilePageLoader = async () => {
-  const userPostsPromise  = axiosInstance("/users/profilePosts");
-  const savedPostsPromise = axiosInstance("/users/savedPosts");
-  const chatPromise       = axiosInstance("/chats");
+  const postPromise = axiosInstance("/users/profilePosts");
+  const chatPromise = axiosInstance("/chats");
   return defer({
-    userPostsResponse: userPostsPromise,
-    savedPostsResponse: savedPostsPromise,
+    postResponse: postPromise,
     chatResponse: chatPromise,
   });
 };
