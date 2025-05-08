@@ -13,9 +13,16 @@ export const listPageLoader = async ({ request, params }) => {
   });
 };
 
-export const profilePageLoader = async () => {
-  const postPromise = axiosInstance("/users/profilePosts");
-  const chatPromise = axiosInstance("/chats");
+//export const profilePageLoader = async () => {
+ // const postPromise = axiosInstance("/users/profilePosts");
+ // const chatPromise = axiosInstance("/chats");
+export const profilePageLoader = () => {
+  return defer({
+    myPosts:   axiosInstance("/users/myPosts"),
+    saved:     axiosInstance("/users/savedPosts"),
+    chatData:  axiosInstance("/chats"),
+  });
+};
   return defer({
     postResponse: postPromise,
     chatResponse: chatPromise,
