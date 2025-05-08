@@ -14,7 +14,7 @@ export const listPageLoader = async ({ request, params }) => {
   });
 };
 
-export async function profileLoader() {
+export async function profilePageLoader() {
   const userPostsPromise  = axiosInstance.get("/posts/user");
   const savedPostsPromise = axiosInstance.get("/posts/saved");
   const chatPostsPromise  = axiosInstance.get("/chats");
